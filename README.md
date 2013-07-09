@@ -101,6 +101,14 @@ Check that the given values are equal. Uses weak equality (==).
 
 Message and callback behave just like above.
 
+### Showing results
+
+You can use your own function to show results. The library provides a premade callback:
+
+#### testing.show(error, result)
+
+Show an error if present, a success if there was no error.
+
 ## License
 
 (The MIT License)

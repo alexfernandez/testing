@@ -195,7 +195,7 @@ exports.show = function(error, result)
 	{
 		return exports.failure(error);
 	}
-	exports.success(util.format(result)); 
+	exports.success('All tests successful: %s', util.inspect(result, true, 10, true));
 }
 
 /**
