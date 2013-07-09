@@ -160,28 +160,25 @@ exports.run = function(tests, timeout, callback)
 			timeout += 1000;
 		}
 	}
-	var run = false;
+	// start the timer
+	var running = setTimeout(function()
+	{
+		var message = 'Package tests did not call back';
+		if (callback)
+		{
+			return callback(message);
+		}
+		log.error(message);
+	}, timeout);
+	// run the tests
 	async.series(tests, function(error, result)
 	{
-		run = true;
+		clearTimeout(running);
 		if (callback)
 		{
 			return callback(error, result);
 		}
 	});
-	// give it time
-	setTimeout(function()
-	{
-		if (!run)
-		{
-			var message = 'Package tests did not call back';
-			if (callback)
-			{
-				return callback(message);
-			}
-			log.error(message);
-		}
-	}, timeout);
 }
 
 /**
