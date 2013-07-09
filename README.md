@@ -97,7 +97,7 @@ When there is no callback, just prints the message to console.log() for success,
 
 Default message: 'Assertion error'.
 
-#### testing.assertEquals(expected, actual, [message], [callback])
+#### testing.assertEquals(actual, expected, [message], [callback])
 
 Check that the given values are equal. Uses weak equality (==).
 
