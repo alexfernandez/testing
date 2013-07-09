@@ -39,7 +39,7 @@ Will run tests sequentially.
 
 ## API
 
-Integration is very easy.
+Implementation is very easy, based around three functions.
 
 ### Basics
 
@@ -49,9 +49,11 @@ Callbacks are used for asynchronous testing. They follow the usual node.js conve
 
 When no callback is passed, synchronous testing is performed.
 
-#### testing.success([callback])
+#### testing.success([message], [callback])
 
-Note success for the current test.
+Note success for the current test. An optional message is shown if there is no callback.
+
+If there is a callback, then it is called with the message.
 
 #### testing.failure([message], [callback])
 
@@ -108,6 +110,10 @@ You can use your own function to show results. The library provides a premade ca
 #### testing.show(error, result)
 
 Show an error if present, a success if there was no error.
+
+### Sample code
+
+This same library has some sample code in index.js, check it out!
 
 ## License
 

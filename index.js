@@ -17,7 +17,7 @@ var log = new Log('info');
 
 /**
  * Reports a success for the current test. Parameters:
- *	- message (optional): the message to show. Default: '.'.
+ *	- message (optional): the message to show. Default: true.
  *	- callback (optional): function to call. If not present, just show the message.
  *	The function must be in node.js style: callback(error, result).
  *	In this case, callback(null, message).
@@ -25,7 +25,7 @@ var log = new Log('info');
 exports.success = function(message, callback)
 {
 	var parameters = processParameters(arguments);
-	var message = parameters.message || '.';
+	var message = parameters.message || true;
 	if (parameters.callback)
 	{
 		return parameters.callback(null, message);
