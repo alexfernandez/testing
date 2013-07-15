@@ -130,7 +130,7 @@ exports.assertEquals = function(actual, expected, message, callback)
 	{
 		return parameters.callback(message);
 	}
-	log.failure(message);
+	exports.failure(message);
 }
 
 /**
