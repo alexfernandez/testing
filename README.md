@@ -1,6 +1,6 @@
 # testing
 
-Simple testing library for node.js.
+Simple async testing library for node.js.
 
 ## Installation
 
@@ -15,25 +15,35 @@ Add asynchronous testing to your code very easily. Require testing:
 
     var testing = require('testing');
 
-Add a test function to your code:
+Add a test function to your code, checking if results are what should be expected:
 
-    function testThis(callback)
+    function testAdd(callback)
     {
-        if (1 + 1 == 2)
+		testing.assertEquals(add(1, 1), 2, 'Maths fail', callback);
+		testing.success(callback);
+    }
+
+Run an async test to read the contents of a file and check it is not empty:
+
+    function testAsync(callback)
+    {
+        function fs.readFile('file.txt', function(error, result)
         {
+            if (error)
+            {
+                testing.failure('File not read', callback);
+            }
+            testing.assert(result, 'Empty file', callback);
             testing.success(callback);
-        }
-        else
-        {
-            testing.failure('Maths fail', callback);
-        }
+        });
     }
 
 Run all tests:
 
     testing.run({
-        this: testThis,
-    });
+        this: testAdd,
+        async: testAsync,
+    }, callback);
 
 Will run tests sequentially.
 
