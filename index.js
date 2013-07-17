@@ -100,6 +100,8 @@ function testSuccessFailure(callback)
 {
 	exports.success('success');
 	exports.failure('test; do not consider');
+	// remove this error
+	errors -= 1;
 	callback();
 }
 
