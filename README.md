@@ -115,14 +115,15 @@ Message and callback behave just like above.
 
 #### testing.check(error, [message], [callback])
 
-Not a real assertion, but works as the opposite of one.
-If there is an error, count as a failure. Otherwise, do nothing.
+Check there are no errors.
+Almost the exact opposite of an assertion: if there is an error, count as a failure.
+Otherwise, do nothing.
 
-Has a big advantage over the following code:
+Similar to over the following code:
 
     testing.assert(!error, 'There should be no errors', callback);
 
-in that it shows the actual error message should there be one.
+But with the advantage that it shows the actual error message should there be one.
 
 ### Showing results
 
