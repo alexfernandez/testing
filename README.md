@@ -113,6 +113,17 @@ Check that the given values are equal. Uses weak equality (==).
 
 Message and callback behave just like above.
 
+#### testing.check(error, [message], [callback])
+
+Not a real assertion, but works as the opposite of one.
+If there is an error, count as a failure. Otherwise, do nothing.
+
+Has a big advantage over the following code:
+
+    testing.assert(!error, 'There should be no errors', callback);
+
+in that it shows the actual error message should there be one.
+
 ### Showing results
 
 You can use your own function to show results. The library provides a premade callback:
