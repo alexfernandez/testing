@@ -86,7 +86,7 @@ function testSuccessFailure(callback)
 {
 	exports.success('success');
 	exports.failure('test; do not consider');
-	callback(null);
+	callback();
 }
 
 /**
@@ -134,12 +134,33 @@ exports.assertEquals = function(actual, expected, message, callback)
 }
 
 /**
+ * Check that the error is falsy, show a failure otherwise.
+ */
+exports.check = function(error, message, callback)
+{
+	if (!error)
+	{
+		return;
+	}
+	delete arguments[0];
+	var parameters = processParameters(arguments);
+	var message = parameters.message + ': ' + error;
+	if (parameters.callback)
+	{
+	   return parameters.callback(message);
+	}
+	// show failure with the given arguments
+	exports.failure(message);
+}
+
+/**
  * Test assert functions.
  */
 function testAssert(callback)
 {
 	exports.assert(1 + 1 == 2, 'Basic assert', callback);
-	exports.assertEquals(1 + 1, 2, 'Basic assert', callback);
+	exports.assertEquals(1 + 1, 2, 'Basic assert equals', callback);
+	exports.check(false, 'Check should not trigger', callback);
 	callback();
 }
 
