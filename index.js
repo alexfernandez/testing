@@ -13,6 +13,11 @@ var util = require('util');
 
 // globals
 var log = new Log('info');
+var errors = 0;
+
+// constants
+var IN_GREEN = '\u001b[32m%s\u001b[0m';
+var IN_RED = '\u001b[31m%s\u001b[0m';
 
 
 /**
@@ -30,7 +35,15 @@ exports.success = function(message, callback)
 	{
 		return parameters.callback(null, message);
 	}
-	log.notice('\u001b[32m%s\u001b[0m', message);
+	if (errors)
+	{
+		// previous errors detected
+		log.notice(IN_RED, 'With errors: ' + message);
+	}
+	else
+	{
+		log.notice(IN_GREEN, message);
+	}
 }
 
 /**
@@ -42,13 +55,14 @@ exports.success = function(message, callback)
  */
 exports.failure = function(message, callback)
 {
+	errors += 1;
 	var parameters = processParameters(arguments);
 	var message = parameters.message || '.';
 	if (parameters.callback)
 	{
 		return parameters.callback(message);
 	}
-	log.error('\u001b[31m%s\u001b[0m', message);
+	log.error(IN_RED, message);
 }
 
 /**
