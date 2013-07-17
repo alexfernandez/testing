@@ -63,7 +63,11 @@ When no callback is passed, synchronous testing is performed.
 
 Note success for the current test. An optional message is shown if there is no callback.
 
-If there is a callback, then it is called with the message.
+If there is a callback, then it is called with the message. Default message: true.
+
+Example:
+
+    testing.success(callback);
 
 #### testing.failure([message], [callback])
 
@@ -73,25 +77,29 @@ If the callback is present, calls the callback with the error:
 
     callback(message);
 
-Otherwise the message is shown using console.error().
+Otherwise the message is shown using console.error(). Default message: 'Error'.
 
-Default message: 'Error'.
+Example:
+
+    testing.failure('An error happened', callback);
 
 #### testing.run(tests, [timeout], [callback])
 
-Run a set of tests. The first parameter is an object containing one attribute for every testing function. Example:
-
-    testing.run({
-        first: testFirst,
-        second: testSecond,
-    });
-
-For each attribute, the key is used to display success; the value is a testing function that accepts an optional callback.
+Run a set of tests. The first parameter is an object containing one attribute for every testing function.
 
 The tests are considered as a failure when a certain configurable timeout has passed.
 The timeout parameter is in milliseconds. The default is 1 second per test.
 
 When the optional callback is given, it is called after a failure or the success of all tests.
+
+Example:
+
+    testing.run({
+        first: testFirst,
+        second: testSecond,
+    }, 1000, callback);
+
+For each attribute, the key is used to display success; the value is a testing function that accepts an optional callback.
 
 Note: testing uses async to run tests in series.
 
@@ -104,8 +112,11 @@ There are several utility methods for assertions.
 Checks condition; if true, does nothing. Otherwise calls the callback passing the message, if present.
 
 When there is no callback, just prints the message to console.log() for success, console.error() for errors.
-
 Default message: 'Assertion error'.
+
+Example:
+
+    testing.assert(shouldBeTrue(), 'shouldBeTrue() should return a truthy value', callback);
 
 #### testing.assertEquals(actual, expected, [message], [callback])
 
@@ -113,11 +124,19 @@ Check that the given values are equal. Uses weak equality (==).
 
 Message and callback behave just like above.
 
+Example:
+
+    testing.assertEquals(getOnePlusOne(), 2, 'getOnePlusOne() does not work', callback);
+
 #### testing.check(error, [message], [callback])
 
 Check there are no errors.
 Almost the exact opposite of an assertion: if there is an error, count as a failure.
 Otherwise, do nothing.
+
+Example:
+
+    testing.check(error, 'There should be no errors', callback);
 
 Similar to over the following code:
 
@@ -133,9 +152,14 @@ You can use your own function to show results. The library provides a premade ca
 
 Show an error if present, a success if there was no error.
 
+Example:
+
+    testing.run(tests, testing.show);
+
 ### Sample code
 
-This same library has some sample code in index.js, check it out!
+This library is tested using itself, check it out!
+  https://github.com/alexfernandez/testing/blob/master/index.js
 
 ## License
 
