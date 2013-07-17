@@ -237,18 +237,18 @@ exports.show = function(error, result)
 /**
  * Run all module tests.
  */
-exports.test = function()
+exports.test = function(callback)
 {
 	var tests = {
 		successFailure: testSuccessFailure,
 		assert: testAssert,
 	};
-	exports.run(tests, exports.show);
+	exports.run(tests, callback);
 }
 
 // run tests if invoked directly
 if (__filename == process.argv[1])
 {
-	exports.test();
+	exports.test(exports.show);
 }
 
