@@ -57,7 +57,7 @@ exports.failure = function(message, callback)
 {
 	errors += 1;
 	var parameters = processParameters(arguments);
-	var message = parameters.message || '.';
+	var message = parameters.message || 'Failure';
 	if (parameters.callback)
 	{
 		return parameters.callback(message);
@@ -116,6 +116,7 @@ exports.assert = function(condition, message, callback)
 	}
 	delete arguments[0];
 	var parameters = processParameters(arguments);
+	var message = parameters.message || 'Assertion error';
 	if (parameters.callback)
 	{
 	   return parameters.callback(parameters.message);	
@@ -141,7 +142,8 @@ exports.assertEquals = function(actual, expected, message, callback)
 	delete arguments[0];
 	delete arguments[1];
 	var parameters = processParameters(arguments);
-	var message = util.format('%s: expected %s but got %s', parameters.message, util.inspect(expected), util.inspect(actual));
+	var message = parameters.message || 'Assertion error';
+	var message = util.format('%s: expected %s but got %s', message, util.inspect(expected), util.inspect(actual));
 	if (parameters.callback)
 	{
 		return parameters.callback(message);
