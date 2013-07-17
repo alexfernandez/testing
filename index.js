@@ -17,7 +17,7 @@ var errors = 0;
 
 // constants
 var IN_GREEN = '\u001b[32m%s\u001b[0m';
-var IN_RED = '\u001b[31m%s\u001b[0m';
+var IN_RED = '\u001b[1;31m%s\u001b[0m';
 
 
 /**
