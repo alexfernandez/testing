@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/alexfernandez/testing.png)](http://travis-ci.org/alexfernandez/testing)
+
 # testing
 
 Simple async testing library for node.js.
