@@ -196,7 +196,7 @@ exports.run = function(tests, timeout, callback)
 		timeout = 0;
 		for (var key in tests)
 		{
-			timeout += 1000;
+			timeout += 2000;
 		}
 	}
 	// start the timer
