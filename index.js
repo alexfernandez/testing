@@ -8,7 +8,7 @@
 
 // requires
 var Log = require('log');
-var async = require('async');
+var runner = require('./lib/runner.js');
 var util = require('util');
 
 // globals
@@ -102,7 +102,7 @@ function testSuccessFailure(callback)
 	exports.failure('test; do not consider');
 	// remove this error
 	errors -= 1;
-	callback();
+	exports.success('Success and failure work', callback);
 }
 
 /**
@@ -179,7 +179,7 @@ function testAssert(callback)
 	exports.assert(1 + 1 == 2, 'Basic assert', callback);
 	exports.assertEquals(1 + 1, 2, 'Basic assert equals', callback);
 	exports.check(false, 'Check should not trigger', callback);
-	callback();
+	exports.success(callback);
 }
 
 /**
@@ -210,7 +210,7 @@ exports.run = function(tests, timeout, callback)
 		log.error(message);
 	}, timeout);
 	// run the tests
-	async.series(tests, function(error, result)
+	runner.run(tests, function(error, result)
 	{
 		clearTimeout(running);
 		if (callback)
