@@ -1,6 +1,9 @@
 [![Build Status](https://secure.travis-ci.org/alexfernandez/testing.png)](http://travis-ci.org/alexfernandez/testing)
 
 Simple async testing library for node.js.
+Better suited to asynchronous tests than other libraries since it uses callbacks to get results.
+
+Now shows results in pretty colors!
 
 ## Installation
 
@@ -88,7 +91,7 @@ Example:
 Run a set of tests. The first parameter is an object containing one attribute for every testing function.
 
 The tests are considered as a failure when a certain configurable timeout has passed.
-The timeout parameter is in milliseconds. The default is 1 second per test.
+The timeout parameter is in milliseconds. The default is 2 seconds per test.
 
 When the optional callback is given, it is called after a failure or the success of all tests.
 
