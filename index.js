@@ -229,9 +229,15 @@ exports.show = function(error, result)
 {
 	if (error)
 	{
-		return exports.failure(error);
+		exports.failure(error);
+		process.exit(1);
+		return;
 	}
 	exports.success('All tests run: %s', result);
+	if (result.failure)
+	{
+		process.exit(1);
+	}
 }
 
 /**
