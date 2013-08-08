@@ -233,7 +233,7 @@ exports.show = function(error, result)
 		process.exit(1);
 		return;
 	}
-	exports.success('All tests run: %s', result);
+	log.notice('All tests run with %s', result);
 	if (result.failure)
 	{
 		process.exit(1);
