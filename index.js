@@ -241,6 +241,19 @@ exports.show = function(error, result)
 }
 
 /**
+ * A test which returns a complex object.
+ */
+function testObject(callback)
+{
+	var object = {
+		embedded: {
+			key: 'value',
+		},
+	};
+	exports.success(object, callback);
+}
+
+/**
  * Run all module tests.
  */
 exports.test = function(callback)
@@ -248,6 +261,11 @@ exports.test = function(callback)
 	var tests = {
 		successFailure: testSuccessFailure,
 		assert: testAssert,
+		recursive: {
+			recursive: {
+				object: testObject,
+			},
+		},
 	};
 	exports.run(tests, callback);
 }
