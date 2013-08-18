@@ -162,7 +162,7 @@ exports.check = function(error, message, callback)
 	}
 	delete arguments[0];
 	var parameters = processParameters(arguments);
-	var message = parameters.message + ': ' + error;
+	var message = parameters.message + ': ' + util.inspect(error);
 	if (parameters.callback)
 	{
 	   return parameters.callback(message);
