@@ -158,7 +158,7 @@ exports.assertNotEquals = function(actual, unexpected, message, callback)
 {
 	if (actual != unexpected)
 	{
-		if (JSON.stringify(actual) != JSON.stringify(expected))
+		if (JSON.stringify(actual) != JSON.stringify(unexpected))
 		{
 			// different JSON => different inputs
 			return;
@@ -203,6 +203,9 @@ function testAssert(callback)
 {
 	exports.assert(1 + 1 == 2, 'Basic assert', callback);
 	exports.assertEquals(1 + 1, 2, 'Basic assert equals', callback);
+	exports.assertEquals({a: 'a'}, {a: 'a'}, 'Object assert equals', callback);
+	exports.assertNotEquals(1 + 1, 3, 'Basic assert not equals', callback);
+	exports.assertNotEquals({a: 'a'}, {a: 'b'}, 'Object assert not equals', callback);
 	exports.check(false, 'Check should not trigger', callback);
 	exports.success(callback);
 }
@@ -266,7 +269,7 @@ exports.show = function(error, result)
 }
 
 /**
- * A test which returns a complex object.
+ * A test which returns a complex object, to check how results are displayed.
  */
 function testObject(callback)
 {
