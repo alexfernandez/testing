@@ -142,8 +142,33 @@ exports.assertEquals = function(actual, expected, message, callback)
 	delete arguments[0];
 	delete arguments[1];
 	var parameters = processParameters(arguments);
-	var message = parameters.message || 'Assertion error';
+	var message = parameters.message || 'Assertion for equality error';
 	var message = util.format('%s: expected %s but got %s', message, util.inspect(expected), util.inspect(actual));
+	if (parameters.callback)
+	{
+		return parameters.callback(message);
+	}
+	exports.failure(message);
+}
+
+/**
+ * Assert that two values are *not* equal, and show a failure otherwise.
+ */
+exports.assertNotEquals = function(actual, unexpected, message, callback)
+{
+	if (actual != unexpected)
+	{
+		if (JSON.stringify(actual) != JSON.stringify(expected))
+		{
+			// different JSON => different inputs
+			return;
+		}
+	}
+	delete arguments[0];
+	delete arguments[1];
+	var parameters = processParameters(arguments);
+	var message = parameters.message || 'Assertion for inequality error';
+	var message = util.format('%s: expected %s different from %s', message, util.inspect(actual), util.inspect(unexpected));
 	if (parameters.callback)
 	{
 		return parameters.callback(message);

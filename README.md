@@ -131,6 +131,10 @@ Example:
 
     testing.assertEquals(getOnePlusOne(), 2, 'getOnePlusOne() does not work', callback);
 
+#### testing.assertNotEquals(actual, unexpected, [message], [callback])
+
+Inverse of the above, check that the given values are *not* equal. Uses weak inequality (!=).
+
 #### testing.check(error, [message], [callback])
 
 Check there are no errors.
