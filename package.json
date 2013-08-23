@@ -1,6 +1,6 @@
 {
 	"name": "testing",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "Simple testing framework.",
 	"homepage": "https://github.com/alexfernandez/testing",
 	"contributors": ["Alex Fernández <alexfernandeznpm@gmail.com>"],
