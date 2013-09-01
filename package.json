@@ -1,6 +1,6 @@
 {
 	"name": "testing",
-	"version": "0.0.14",
+	"version": "0.0.15",
 	"description": "Simple testing framework.",
 	"homepage": "https://github.com/alexfernandez/testing",
 	"contributors": ["Alex Fernández <alexfernandeznpm@gmail.com>"],
@@ -21,4 +21,4 @@
 		"test": "node index.js"
 	},
 	"private": false
-  }
+}
