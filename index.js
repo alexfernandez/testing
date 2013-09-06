@@ -222,11 +222,14 @@ exports.run = function(tests, timeout, callback)
 	{
 		callback = timeout;
 		timeout = 0;
-		for (var key in tests)
-		{
-			timeout += 2000;
-		}
 	}
+	var nTests = 0;
+	for (var key in tests)
+	{
+		nTests += 1;
+	}
+	// if no timeout, give each test one second
+	timeout = timeout || 1000 * nTests;
 	// start the timer
 	var running = setTimeout(function()
 	{
