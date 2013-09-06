@@ -223,6 +223,10 @@ exports.run = function(tests, timeout, callback)
 		callback = timeout;
 		timeout = 0;
 	}
+	if (!callback)
+	{
+		log.warning('No callback given to testing.run()');
+	}
 	var nTests = 0;
 	for (var key in tests)
 	{
