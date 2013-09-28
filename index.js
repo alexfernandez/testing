@@ -30,10 +30,11 @@ var IN_RED = '\u001b[1;31m%s\u001b[0m';
 exports.success = function(message, callback)
 {
 	var parameters = processParameters(arguments);
-	var message = parameters.message || true;
-	if (parameters.callback)
+	message = parameters.message || true;
+	callback = parameters.callback;
+	if (callback)
 	{
-		return parameters.callback(null, message);
+		return callback(null, message);
 	}
 	if (errors)
 	{
@@ -44,7 +45,7 @@ exports.success = function(message, callback)
 	{
 		log.notice(IN_GREEN, message);
 	}
-}
+};
 
 /**
  * Reports a failure for the current test. Parameters:
@@ -57,13 +58,14 @@ exports.failure = function(message, callback)
 {
 	errors += 1;
 	var parameters = processParameters(arguments);
-	var message = parameters.message || 'Failure';
-	if (parameters.callback)
+	message = parameters.message || 'Failure';
+	callback = parameters.callback;
+	if (callback)
 	{
-		return parameters.callback(message);
+		return callback(message);
 	}
 	log.error(IN_RED, message);
-}
+};
 
 /**
  * Find a callback in any parameter, extract the message. Parameters:
@@ -116,14 +118,15 @@ exports.assert = function(condition, message, callback)
 	}
 	delete arguments[0];
 	var parameters = processParameters(arguments);
-	var message = parameters.message || 'Assertion error';
-	if (parameters.callback)
+	message = parameters.message || 'Assertion error';
+	callback = parameters.callback;
+	if (callback)
 	{
-	   return parameters.callback(parameters.message);	
+		return callback(parameters.message);	
 	}
 	// show failure with the given arguments
 	exports.failure(parameters.message);
-}
+};
 
 /**
  * Assert that two values are equal, and show a failure otherwise.
@@ -142,14 +145,15 @@ exports.assertEquals = function(actual, expected, message, callback)
 	delete arguments[0];
 	delete arguments[1];
 	var parameters = processParameters(arguments);
-	var message = parameters.message || 'Assertion for equality error';
-	var message = util.format('%s: expected %s but got %s', message, util.inspect(expected), util.inspect(actual));
-	if (parameters.callback)
+	message = parameters.message || 'Assertion for equality error';
+	message = util.format('%s: expected %s but got %s', message, util.inspect(expected), util.inspect(actual));
+	callback = parameters.callback;
+	if (callback)
 	{
-		return parameters.callback(message);
+		return callback(message);
 	}
 	exports.failure(message);
-}
+};
 
 /**
  * Assert that two values are *not* equal, and show a failure otherwise.
@@ -167,14 +171,15 @@ exports.assertNotEquals = function(actual, unexpected, message, callback)
 	delete arguments[0];
 	delete arguments[1];
 	var parameters = processParameters(arguments);
-	var message = parameters.message || 'Assertion for inequality error';
-	var message = util.format('%s: expected %s different from %s', message, util.inspect(actual), util.inspect(unexpected));
-	if (parameters.callback)
+	message = parameters.message || 'Assertion for inequality error';
+	message = util.format('%s: expected %s different from %s', message, util.inspect(actual), util.inspect(unexpected));
+	callback = parameters.callback;
+	if (callback)
 	{
-		return parameters.callback(message);
+		return callback(message);
 	}
 	exports.failure(message);
-}
+};
 
 /**
  * Check that the error is falsy, show a failure otherwise.
@@ -187,14 +192,15 @@ exports.check = function(error, message, callback)
 	}
 	delete arguments[0];
 	var parameters = processParameters(arguments);
-	var message = parameters.message + ': ' + util.inspect(error);
-	if (parameters.callback)
+	message = parameters.message + ': ' + util.inspect(error);
+	callback = parameters.callback;
+	if (callback)
 	{
-	   return parameters.callback(message);
+		return callback(message);
 	}
 	// show failure with the given arguments
 	exports.failure(message);
-}
+};
 
 /**
  * Test assert functions.
@@ -230,7 +236,10 @@ exports.run = function(tests, timeout, callback)
 	var nTests = 0;
 	for (var key in tests)
 	{
-		nTests += 1;
+		if (tests.hasOwnProperty(key))
+		{
+			nTests += 1;
+		}
 	}
 	// if no timeout, give each test one second
 	timeout = timeout || 1000 * nTests;
@@ -253,7 +262,7 @@ exports.run = function(tests, timeout, callback)
 			return callback(error, result);
 		}
 	});
-}
+};
 
 /**
  * Show the result of some tests. Parameters:
@@ -273,7 +282,7 @@ exports.show = function(error, result)
 	{
 		process.exit(1);
 	}
-}
+};
 
 /**
  * A test which returns a complex object, to check how results are displayed.
@@ -303,7 +312,7 @@ exports.test = function(callback)
 		},
 	};
 	exports.run(tests, callback);
-}
+};
 
 // run tests if invoked directly
 if (__filename == process.argv[1])
