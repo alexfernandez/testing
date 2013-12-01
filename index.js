@@ -277,9 +277,8 @@ exports.show = function(error, result)
 		process.exit(1);
 		return;
 	}
-	var resultString = result.substringUpTo(':');
 	log.notice('All tests run with %s', result);
-	log.notice('Tests result: %s', resultString);
+	log.notice('Final tests result: %s', result.getSummary());
 	if (result.failure)
 	{
 		process.exit(1);
@@ -304,15 +303,15 @@ function testObject(callback)
  */
 exports.test = function(callback)
 {
-	var tests = {
-		successFailure: testSuccessFailure,
-		assert: testAssert,
-		recursive: {
+	var tests = [
+		testSuccessFailure,
+		testAssert,
+		{
 			recursive: {
 				object: testObject,
 			},
 		},
-	};
+	];
 	exports.run(tests, callback);
 };
 
