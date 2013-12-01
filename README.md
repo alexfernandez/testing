@@ -163,6 +163,8 @@ Example:
 
     testing.run(tests, testing.show);
 
+This line can be run at the end of every code file to run its set of tests.
+
 ### Sample code
 
 This library is tested using itself, check it out!
