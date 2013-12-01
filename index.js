@@ -277,7 +277,9 @@ exports.show = function(error, result)
 		process.exit(1);
 		return;
 	}
+	var resultString = result.substringUpTo(':');
 	log.notice('All tests run with %s', result);
+	log.notice('Tests result: %s', resultString);
 	if (result.failure)
 	{
 		process.exit(1);
