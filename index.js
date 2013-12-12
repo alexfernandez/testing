@@ -101,7 +101,7 @@ function processParameters(args)
 function testSuccessFailure(callback)
 {
 	exports.success('success');
-	exports.failure('test; do not consider');
+	exports.failure('test; please ignore');
 	// remove this error
 	errors -= 1;
 	exports.success('Success and failure work', callback);
