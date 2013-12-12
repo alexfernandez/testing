@@ -122,10 +122,10 @@ exports.assert = function(condition, message, callback)
 	callback = parameters.callback;
 	if (callback)
 	{
-		return callback(parameters.message);	
+		return callback(message);
 	}
 	// show failure with the given arguments
-	exports.failure(parameters.message);
+	exports.failure(message);
 };
 
 /**
