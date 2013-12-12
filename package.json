@@ -1,6 +1,6 @@
 {
 	"name": "testing",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "Simple asynchronous testing framework. Never again count your asserts! This tiny testing library is fully callback-based and has a rich API for asserts.",
 	"homepage": "https://github.com/alexfernandez/testing",
 	"contributors": ["Alex Fernández <alexfernandeznpm@gmail.com>"],
