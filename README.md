@@ -72,7 +72,10 @@ Will run tests sequentially. Usually test are run inside an exported function `t
         exports.test(testing.show);
     }
 
-All tests are run every time the file is invoked directly.
+All tests are run every time the file is invoked directly:
+
+    node my-file.js
+
 The function `test` is exported so that tests from all source code files
 can be required and run in sequence from a master file,
 usually called `test.js` and placed in the root of the project.
