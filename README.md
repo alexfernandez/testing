@@ -18,6 +18,8 @@ Add asynchronous testing to your code very easily. Require testing:
 
     var testing = require('testing');
 
+### Unit tests
+
 Add a test function to your code, checking if results are what should be expected:
 
     function testAdd(callback)
@@ -41,14 +43,39 @@ Run an async test to read the contents of a file and check it is not empty:
         });
     }
 
+### Running all tests
+
 Run all tests:
 
-    testing.run({
-        this: testAdd,
-        async: testAsync,
-    }, callback);
+    testing.run([
+        testAdd,
+        testAsync,
+    ], callback);
 
-Will run tests sequentially.
+Will run tests sequentially. Usually test are run inside an exported function `test`:
+
+    /**
+     * Run package tests.
+     */
+    exports.test = function(callback)
+    {   
+        var tests = [
+            testAdd,
+            testAsync,
+        ];
+        testing.run(tests, callback);
+    };  
+        
+    // run tests if invoked directly
+    if (__filename == process.argv[1])
+    {   
+        exports.test(testing.show);
+    }
+
+All tests are run every time the file is invoked directly.
+The function `test` is exported so that tests from all source code files
+can be required and run in sequence from a master file,
+usually called `test.js` and placed in the root of the project.
 
 ## API
 
@@ -164,6 +191,14 @@ Example:
     testing.run(tests, testing.show);
 
 This line can be run at the end of every code file to run its set of tests.
+
+#### testing.showComplete(error, result)
+
+Like `testing.show()`, but shows the complete hierarchical tree of tests.
+
+Example:
+
+    exports.test(testing.showComplete);
 
 ### Sample code
 

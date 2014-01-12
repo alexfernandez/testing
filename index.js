@@ -271,19 +271,35 @@ exports.run = function(tests, timeout, callback)
  */
 exports.show = function(error, result)
 {
+	showResults(error, result);
+};
+
+/**
+ * Show the complete hierarchical error results.
+ */
+exports.showComplete = function(error, result)
+{
+	log.notice('Complete test results: %s', result);
+	showResults(error, result);
+};
+
+/**
+ * Show test results.
+ */
+function showResults(error, result)
+{
 	if (error)
 	{
 		exports.failure(error);
 		process.exit(1);
 		return;
 	}
-	log.notice('All tests run with %s', result);
-	log.notice('Final tests result: %s', result.getSummary());
+	log.notice('All tests run with %s', result.getSummary());
 	if (result.failure)
 	{
 		process.exit(1);
 	}
-};
+}
 
 /**
  * A test which returns a complex object, to check how results are displayed.
