@@ -195,6 +195,8 @@ This line can be run at the end of every code file to run its set of tests.
 #### testing.showComplete(error, result)
 
 Like `testing.show()`, but shows the complete hierarchical tree of tests.
+Test information is therefore duplicated: once shown while running,
+another after all tests.
 
 Example:
 
