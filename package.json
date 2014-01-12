@@ -15,7 +15,7 @@
 	},
 	"keywords" : ["testing", "test", "test framework", "TDD", "asynchronous"],
 	"engines": {
-		"node": "*"
+		"node": ">=0.8"
 	},
 	"scripts": {
 		"test": "node index.js"
