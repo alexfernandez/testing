@@ -294,7 +294,15 @@ function showResults(error, result)
 		process.exit(1);
 		return;
 	}
-	log.notice('All tests run with %s', result.getSummary());
+	if (!result)
+	{
+		result = 'No test result';
+	}
+	else if (result.getSummary)
+	{
+		result = result.getSummary();
+	}
+	log.notice('All tests run with %s', result);
 	if (result.failure)
 	{
 		process.exit(1);
