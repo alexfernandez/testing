@@ -294,15 +294,16 @@ function showResults(error, result)
 		process.exit(1);
 		return;
 	}
-	if (!result)
+	var printable = 'No test result';
+	if (typeof result == 'string')
 	{
-		result = 'No test result';
+		printable = result;
 	}
-	else if (result.getSummary)
+	else if (result && result.getSummary)
 	{
-		result = result.getSummary();
+		printable = result.getSummary();
 	}
-	log.notice('All tests run with %s', result);
+	log.notice('All tests run with %s', printable);
 	if (result.failure)
 	{
 		process.exit(1);
