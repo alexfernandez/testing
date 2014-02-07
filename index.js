@@ -218,7 +218,8 @@ function testAssert(callback)
 
 /**
  * Run a set of tests. Parameters:
- *	- tests: an object with an attribute for every test function.
+ *	- tests: an object with an attribute for every test function,
+*	an array or a single function.
  *	- timeout: an optional timeout to consider tests as failed.
  *	- callback: an optional function to call after tests have finished.
  */
@@ -232,6 +233,10 @@ exports.run = function(tests, timeout, callback)
 	if (!callback)
 	{
 		log.warning('No callback given to testing.run()');
+	}
+	if (typeof tests == 'function')
+	{
+		tests = [tests];
 	}
 	var nTests = 0;
 	for (var key in tests)
@@ -324,6 +329,14 @@ function testObject(callback)
 }
 
 /**
+ * Function to test separately.
+ */
+function testSingleFunction(callback)
+{
+	exports.success(true, callback);
+}
+
+/**
  * Run all module tests.
  */
 exports.test = function(callback)
@@ -337,7 +350,12 @@ exports.test = function(callback)
 			},
 		},
 	];
-	exports.run(tests, callback);
+	exports.run(testSingleFunction, function(error, result)
+	{
+		exports.check(error, 'Could not run single function', callback);
+		exports.assert(result, 'Invalid test result', callback);
+		exports.run(tests, callback);
+	});
 };
 
 // run tests if invoked directly
