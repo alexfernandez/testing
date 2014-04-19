@@ -80,6 +80,19 @@ The function `test` is exported so that tests from all source code files
 can be required and run in sequence from a master file,
 usually called `test.js` and placed in the root of the project.
 
+### Running all tests in a project
+
+If you want to run all tests in a project, you can pass a filename as a test:
+
+    var tests = [
+        __dirname__ + '/lib/first.js',
+        __dirname__ + '/lib/second.js',
+    ];
+    testing.run(tests, callback);
+
+Each file should have its own exported test function.
+This is a common practice in a global test file `test.js`.
+
 ## API
 
 Implementation is very easy, based around three functions.
