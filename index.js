@@ -337,6 +337,22 @@ function testSingleFunction(callback)
 }
 
 /**
+ * Pass a tester callback whose results you want shown.
+ * Returns a function that runs the tests, shows the results and invokes the callback.
+ */
+exports.toShow = function(tester)
+{
+	return function(callback)
+	{
+		tester(function(error, result)
+		{
+			showResults(error, result);
+			callback(error, result);
+		});
+	};
+};
+
+/**
  * Run all module tests.
  */
 exports.test = function(callback)
