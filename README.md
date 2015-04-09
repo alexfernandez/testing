@@ -205,6 +205,22 @@ Example:
 
     exports.test(testing.showComplete);
 
+#### testing.toShow(tester)
+
+Returns a function with a callback as parameter,
+that runs the tests, shows results and invokes the callback.
+Useful to insert in some callback loop.
+
+Example:
+
+    var tasks = [testing.toShow(test1), testing.toShow(test2)];
+    async.parallel(tasks, function()
+    {
+        console.log('All tests run');
+    });
+
+Runs a couple of tests in parallel, showing their results as they finish.
+
 ### Sample code
 
 This library is tested using itself, check it out!
