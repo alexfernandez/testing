@@ -60,11 +60,11 @@ exports.failure = function(message, callback)
 	var parameters = processParameters(arguments);
 	message = parameters.message || 'Failure';
 	callback = parameters.callback;
-	log.error(IN_RED, message);
 	if (callback)
 	{
 		return callback(message);
 	}
+	log.error(IN_RED, message);
 };
 
 /**
@@ -252,11 +252,11 @@ exports.run = function(tests, timeout, callback)
 	var running = setTimeout(function()
 	{
 		var message = 'Package tests did not call back';
+		log.error(IN_RED, message);
 		if (callback)
 		{
 			return callback(message);
 		}
-		log.error(message);
 	}, timeout);
 	// run the tests
 	runner.run(tests, function(error, result)
