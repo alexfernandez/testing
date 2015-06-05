@@ -60,11 +60,11 @@ exports.failure = function(message, callback)
 	var parameters = processParameters(arguments);
 	message = parameters.message || 'Failure';
 	callback = parameters.callback;
+	log.error(IN_RED, message);
 	if (callback)
 	{
 		return callback(message);
 	}
-	log.error(IN_RED, message);
 };
 
 /**
