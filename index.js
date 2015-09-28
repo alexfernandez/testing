@@ -192,7 +192,12 @@ exports.check = function(error, message, callback)
 	}
 	delete arguments[0];
 	var parameters = processParameters(arguments);
-	message = parameters.message + ': ' + util.inspect(error);
+	var description = util.inspect(error);
+	if (error.stack)
+	{
+		description = error.stack;
+	}
+	message = parameters.message + ': ' + description;
 	callback = parameters.callback;
 	if (callback)
 	{
