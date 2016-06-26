@@ -1,12 +1,32 @@
+sudo: false
+
 language: node_js
 
-# test on two node.js versions: 0.8 0.10
 node_js:
-  - 0.8
-  - 0.10
+  - "4"
+  - "5"
+  - "6"
 
-# configure notifications (email, IRC, campfire etc)
-# please update this section to your needs!
-#notifications:
-#  irc: "irc.freenode.org#travis"
+cache:
+  directories:
+    - node_modules
 
+install:
+  - npm install
+
+script:
+  - npm run test
+  - npm run lint
+  - npm run build
+
+# Necessary to compile native modules for io.js v3 or Node.js v4
+env:
+  - CXX=g++-4.8
+
+# Necessary to compile native modules for io.js v3 or Node.js v4
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
