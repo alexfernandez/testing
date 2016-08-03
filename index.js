@@ -66,6 +66,7 @@ exports.failure = function(message, callback)
 	}
 	log.error(IN_RED, message);
 };
+exports.fail = exports.failure;
 
 /**
  * Find a callback in any parameter, extract the message. Parameters:

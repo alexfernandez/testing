@@ -129,6 +129,10 @@ Example:
 
     testing.failure('An error happened', callback);
 
+#### testing.fail([message], [callback])
+
+Alias to `testing.failure()`.
+
 #### testing.run(tests, [timeout], [callback])
 
 Run a set of tests. The first parameter is an object containing one attribute for every testing function.
@@ -137,6 +141,14 @@ The tests are considered as a failure when a certain configurable timeout has pa
 The timeout parameter is in milliseconds. The default is 2 seconds per test.
 
 When the optional callback is given, it is called after a failure or the success of all tests.
+The callback has this signature, following the usual Node.js syntax:
+
+    function (error, result) {
+        ...
+    }
+
+`error` will contain the results of the tests when they fail.
+`result` will contain the results when they succeed.
 
 Example:
 
