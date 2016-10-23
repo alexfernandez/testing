@@ -110,7 +110,7 @@ function testSuccessFailure(callback)
 /**
  * Assert a condition, and show a failure otherwise.
  */
-exports.assert = function(condition, message, callback)
+exports.verify = function(condition, message, callback)
 {
 	if (condition)
 	{
@@ -127,11 +127,12 @@ exports.assert = function(condition, message, callback)
 	// show failure with the given arguments
 	exports.failure(message);
 };
+exports.assert = exports.verify;
 
 /**
  * Assert that two values are equal, and show a failure otherwise.
  */
-exports.assertEquals = function(actual, expected, message, callback)
+exports.equals = function(actual, expected, message, callback)
 {
 	if (actual == expected)
 	{
@@ -154,11 +155,12 @@ exports.assertEquals = function(actual, expected, message, callback)
 	}
 	exports.failure(message);
 };
+exports.assertEquals = export.equals;
 
 /**
  * Assert that two values are *not* equal, and show a failure otherwise.
  */
-exports.assertNotEquals = function(actual, unexpected, message, callback)
+exports.notEquals = function(actual, unexpected, message, callback)
 {
 	if (actual != unexpected)
 	{
@@ -180,6 +182,7 @@ exports.assertNotEquals = function(actual, unexpected, message, callback)
 	}
 	exports.failure(message);
 };
+exports.assertNotEquals = exports.notEquals;
 
 /**
  * Check that the error is falsy, show a failure otherwise.
@@ -212,11 +215,11 @@ exports.check = function(error, message, callback)
  */
 function testAssert(callback)
 {
-	exports.assert(1 + 1 == 2, 'Basic assert', callback);
-	exports.assertEquals(1 + 1, 2, 'Basic assert equals', callback);
-	exports.assertEquals({a: 'a'}, {a: 'a'}, 'Object assert equals', callback);
-	exports.assertNotEquals(1 + 1, 3, 'Basic assert not equals', callback);
-	exports.assertNotEquals({a: 'a'}, {a: 'b'}, 'Object assert not equals', callback);
+	exports.verify(1 + 1 == 2, 'Basic assert', callback);
+	exports.equals(1 + 1, 2, 'Basic assert equals', callback);
+	exports.equals({a: 'a'}, {a: 'a'}, 'Object assert equals', callback);
+	exports.notEquals(1 + 1, 3, 'Basic assert not equals', callback);
+	exports.notEquals({a: 'a'}, {a: 'b'}, 'Object assert not equals', callback);
 	exports.check(false, 'Check should not trigger', callback);
 	exports.success(callback);
 }

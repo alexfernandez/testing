@@ -153,6 +153,7 @@ Note: testing uses async to run tests in series.
 
 There are several utility methods for assertions.
 
+#### testing.verify(condition, [message], [callback])
 #### testing.assert(condition, [message], [callback])
 
 Checks condition; if true, does nothing. Otherwise calls the callback passing the message, if present.
@@ -164,6 +165,7 @@ Example:
 
     testing.assert(shouldBeTrue(), 'shouldBeTrue() should return a truthy value', callback);
 
+#### testing.equals(actual, expected, [message], [callback])
 #### testing.assertEquals(actual, expected, [message], [callback])
 
 Check that the given values are equal. Uses weak equality (==).
@@ -172,8 +174,9 @@ Message and callback behave just like above.
 
 Example:
 
-    testing.assertEquals(getOnePlusOne(), 2, 'getOnePlusOne() does not work', callback);
+    testing.equals(getOnePlusOne(), 2, 'getOnePlusOne() does not work', callback);
 
+#### testing.notEquals(actual, unexpected, [message], [callback])
 #### testing.assertNotEquals(actual, unexpected, [message], [callback])
 
 Inverse of the above, check that the given values are *not* equal. Uses weak inequality (!=).
