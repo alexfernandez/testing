@@ -155,7 +155,7 @@ exports.equals = function(actual, expected, message, callback)
 	}
 	exports.failure(message);
 };
-exports.assertEquals = export.equals;
+exports.assertEquals = exports.equals;
 
 /**
  * Assert that two values are *not* equal, and show a failure otherwise.
