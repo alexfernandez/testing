@@ -184,6 +184,43 @@ exports.notEquals = function(actual, unexpected, message, callback)
 };
 exports.assertNotEquals = exports.notEquals;
 
+exports.contains = function(container, piece, message, callback)
+{
+	if (typeof container == 'string')
+	{
+		if (container.indexOf(piece) != -1)
+		{
+			return;
+		}
+	}
+	else if (Array.isArray(container))
+	{
+		for (var i = 0; i < container.length; i++)
+		{
+			if (container[i] == piece)
+			{
+				return;
+			}
+		}
+	}
+	else
+	{
+		message = 'Invalid container ' + typeof container + ', should be string or array, cannot check ' + message;
+		return exports.failure(message, callback);
+	}
+	delete arguments[0];
+	delete arguments[1];
+	var parameters = processParameters(arguments);
+	message = parameters.message || 'Assertion for equality error';
+	message = util.format('%s: %s does not contain %s', message, util.inspect(container), util.inspect(piece));
+	callback = parameters.callback;
+	if (callback)
+	{
+		return callback(message);
+	}
+	exports.failure(message);
+};
+
 /**
  * Check that the error is falsy, show a failure otherwise.
  */

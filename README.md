@@ -181,6 +181,17 @@ Example:
 
 Inverse of the above, check that the given values are *not* equal. Uses weak inequality (!=).
 
+#### testing.contains(container, piece, [message], [callback])
+
+Check that the container contains the piece.
+Works for strings and arrays.
+
+Message and callback behave just like above.
+
+Example:
+
+    testing.contains('Big string', 'g s', 'Does not contain', callback);
+
 #### testing.check(error, [message], [callback])
 
 Check there are no errors.
