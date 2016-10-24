@@ -120,12 +120,8 @@ exports.verify = function(condition, message, callback)
 	var parameters = processParameters(arguments);
 	message = parameters.message || 'Assertion error';
 	callback = parameters.callback;
-	if (callback)
-	{
-		return callback(message);
-	}
 	// show failure with the given arguments
-	exports.failure(message);
+	exports.failure(message, callback);
 };
 exports.assert = exports.verify;
 
@@ -149,11 +145,7 @@ exports.equals = function(actual, expected, message, callback)
 	message = parameters.message || 'Assertion for equality error';
 	message = util.format('%s: expected %s but got %s', message, util.inspect(expected), util.inspect(actual));
 	callback = parameters.callback;
-	if (callback)
-	{
-		return callback(message);
-	}
-	exports.failure(message);
+	exports.failure(message, callback);
 };
 exports.assertEquals = exports.equals;
 
@@ -176,11 +168,7 @@ exports.notEquals = function(actual, unexpected, message, callback)
 	message = parameters.message || 'Assertion for inequality error';
 	message = util.format('%s: expected %s different from %s', message, util.inspect(actual), util.inspect(unexpected));
 	callback = parameters.callback;
-	if (callback)
-	{
-		return callback(message);
-	}
-	exports.failure(message);
+	exports.failure(message, callback);
 };
 exports.assertNotEquals = exports.notEquals;
 
@@ -213,12 +201,7 @@ exports.contains = function(container, piece, message, callback)
 	var parameters = processParameters(arguments);
 	message = parameters.message || 'Assertion for equality error';
 	message = util.format('%s: %s does not contain %s', message, util.inspect(container), util.inspect(piece));
-	callback = parameters.callback;
-	if (callback)
-	{
-		return callback(message);
-	}
-	exports.failure(message);
+	exports.failure(message, parameters.callback);
 };
 
 /**
@@ -239,12 +222,8 @@ exports.check = function(error, message, callback)
 	}
 	message = parameters.message + ': ' + description;
 	callback = parameters.callback;
-	if (callback)
-	{
-		return callback(message);
-	}
 	// show failure with the given arguments
-	exports.failure(message);
+	exports.failure(message, callback);
 };
 
 /**
