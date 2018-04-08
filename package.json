@@ -3,7 +3,9 @@
 	"version": "1.1.1",
 	"description": "Simple asynchronous testing framework. Never again count your asserts! This tiny testing library is fully callback-based and has a rich API for asserts.",
 	"homepage": "https://github.com/alexfernandez/testing",
-	"contributors": ["Alex Fernández <alexfernandeznpm@gmail.com>"],
+	"contributors": [
+		"Alex Fernández <alexfernandeznpm@gmail.com>"
+	],
 	"license": "MIT",
 	"main": "index.js",
 	"repository": {
@@ -13,7 +15,13 @@
 	"dependencies": {
 		"log": "*"
 	},
-	"keywords" : ["testing", "test", "test framework", "TDD", "asynchronous"],
+	"keywords": [
+		"testing",
+		"test",
+		"test framework",
+		"TDD",
+		"asynchronous"
+	],
 	"engines": {
 		"node": "*"
 	},
