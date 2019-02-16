@@ -13,7 +13,7 @@
 		"url": "https://github.com/alexfernandez/testing"
 	},
 	"dependencies": {
-		"log": "*"
+		"log": "1.4.0"
 	},
 	"keywords": [
 		"testing",
