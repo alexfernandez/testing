@@ -377,6 +377,20 @@ exports.toShow = function(tester)
 	};
 };
 
+async function testPromise()
+{
+	await sleep(100)
+	return 'promise'
+}
+
+function sleep(ms) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve()
+		}, ms)
+	})
+}
+
 /**
  * Run all module tests.
  */
@@ -390,6 +404,7 @@ exports.test = function(callback)
 				object: testObject,
 			},
 		},
+		testPromise,
 	];
 	exports.run(testSingleFunction, function(error, result)
 	{

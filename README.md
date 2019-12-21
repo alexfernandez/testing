@@ -30,11 +30,20 @@ Add a test function to your code, checking if results are what should be expecte
 		testing.success(callback);
     }
 ```
+
 Run an async test to read the contents of a file and check it is not empty:
+```js
+    async function testAsync() {
+        const result = await fs.promises.readFile('file.txt')
+        testing.assert(result, 'Empty file', callback)
+    }
+```
+
+Or, with callbacks:
 ```js
     function testAsync(callback)
     {
-        function fs.readFile('file.txt', function(error, result)
+        fs.readFile('file.txt', function(error, result)
         {
             if (error)
             {
@@ -45,6 +54,7 @@ Run an async test to read the contents of a file and check it is not empty:
         });
     }
 ```
+
 ### Running all tests
 
 Run all tests:
