@@ -1,6 +1,6 @@
 {
 	"name": "testing",
-	"version": "1.1.2",
+	"version": "2.0.0",
 	"description": "Simple asynchronous testing framework. Never again count your asserts! This tiny testing library is fully callback-based and has a rich API for asserts.",
 	"homepage": "https://github.com/alexfernandez/testing",
 	"contributors": [
@@ -23,7 +23,7 @@
 		"asynchronous"
 	],
 	"engines": {
-		"node": "*"
+		"node": ">8"
 	},
 	"scripts": {
 		"test": "node index.js"

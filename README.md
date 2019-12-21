@@ -12,6 +12,13 @@ Just run:
 
 Or add package testing to your package.json dependencies.
 
+### Compatibility
+
+Versions 2 and later should be used at least with Node.js v8 or later:
+
+* Node.js v8 or later: ^2.0.0.
+* Node.js v6 or earlier: ^1.1.0.
+
 ## Usage
 
 Add asynchronous testing to your code very easily. Require testing:
