@@ -117,8 +117,9 @@ export function verify(condition, message, callback) {
 	// show failure with the given arguments
 	failure(message, callback);
 }
-export function assert(condition, message, callback) {
-	return verify(condition, message, callback)
+
+export function assert(...args) {
+	return verify(...args)
 }
 
 /**
