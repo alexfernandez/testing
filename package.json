@@ -1,8 +1,9 @@
 {
 	"name": "testing",
-	"version": "2.0.1",
+	"version": "3.0.0",
 	"description": "Simple asynchronous testing framework. Never again count your asserts! This tiny testing library is fully callback-based and has a rich API for asserts.",
 	"homepage": "https://github.com/alexfernandez/testing",
+	"type": "module",
 	"contributors": [
 		"Alex Fernández <alexfernandeznpm@gmail.com>"
 	],
@@ -12,9 +13,6 @@
 		"type": "git",
 		"url": "https://github.com/alexfernandez/testing"
 	},
-	"dependencies": {
-		"log": "1.4.0"
-	},
 	"keywords": [
 		"testing",
 		"test",
@@ -23,10 +21,13 @@
 		"asynchronous"
 	],
 	"engines": {
-		"node": ">8"
+		"node": ">16"
 	},
 	"scripts": {
-		"test": "node index.js"
+		"test": "node test.js"
 	},
-	"private": false
+	"private": false,
+	"devDependencies": {
+		"eslint": "^8.47.0"
+	}
 }
