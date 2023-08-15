@@ -1,14 +1,11 @@
-'use strict';
-
 /**
  * Testing library.
  * (C) 2013 Alex Fernández.
  */
 
 
-// requires
-const runner = require('./lib/runner.js');
-const util = require('util');
+import {runAll} from './lib/runner.js'
+import util from 'util'
 
 const GREEN = '\u001b[32m';
 const RED = '\u001b[1;31m';
@@ -23,8 +20,7 @@ let errors = 0;
  *	The function must be in node.js style: callback(error, result).
  *	In this case, callback(null, message).
  */
-exports.success = function(message, callback)
-{
+export function success(message, callback) {
 	const parameters = processParameters(arguments);
 	message = parameters.message || true;
 	callback = parameters.callback;
@@ -41,7 +37,7 @@ exports.success = function(message, callback)
 	{
 		notice(message);
 	}
-};
+}
 
 /**
  * Reports a failure for the current test. Parameters:
@@ -50,8 +46,7 @@ exports.success = function(message, callback)
  *	The function must be in node.js style: callback(error, result).
  *	In this case, callback(message).
  */
-exports.failure = function(message, callback)
-{
+export function failure(message, callback) {
 	errors += 1;
 	const parameters = processParameters(arguments);
 	message = parameters.message || 'Failure';
@@ -61,8 +56,11 @@ exports.failure = function(message, callback)
 		return callback(message);
 	}
 	error(message);
-};
-exports.fail = exports.failure;
+}
+
+export function fail(...args) {
+	return failure(...args)
+}
 
 /**
  * Find a callback in any parameter, extract the message. Parameters:
@@ -97,18 +95,17 @@ function processParameters(args)
  */
 function testSuccessFailure(callback)
 {
-	exports.success('success');
-	exports.failure('test; please ignore');
+	success('success');
+	failure('test; please ignore');
 	// remove this error
 	errors -= 1;
-	exports.success('Success and failure work', callback);
+	success('Success and failure work', callback);
 }
 
 /**
  * Assert a condition, and show a failure otherwise.
  */
-exports.verify = function(condition, message, callback)
-{
+export function verify(condition, message, callback) {
 	if (condition)
 	{
 		return;
@@ -118,15 +115,16 @@ exports.verify = function(condition, message, callback)
 	message = parameters.message || 'Assertion error';
 	callback = parameters.callback;
 	// show failure with the given arguments
-	exports.failure(message, callback);
-};
-exports.assert = exports.verify;
+	failure(message, callback);
+}
+export function assert(condition, message, callback) {
+	return verify(condition, message, callback)
+}
 
 /**
  * Assert that two values are equal, and show a failure otherwise.
  */
-exports.equals = function(actual, expected, message, callback)
-{
+export function equals(actual, expected, message, callback) {
 	if (actual == expected)
 	{
 		return;
@@ -142,15 +140,17 @@ exports.equals = function(actual, expected, message, callback)
 	message = parameters.message || 'Assertion for equality error';
 	message = util.format('%s: expected %s but got %s', message, util.inspect(expected), util.inspect(actual));
 	callback = parameters.callback;
-	exports.failure(message, callback);
-};
-exports.assertEquals = exports.equals;
+	failure(message, callback);
+}
+
+export function assertEquals(...args) {
+	return equals(...args);
+}
 
 /**
  * Assert that two values are *not* equal, and show a failure otherwise.
  */
-exports.notEquals = function(actual, unexpected, message, callback)
-{
+export function notEquals(actual, unexpected, message, callback) {
 	if (actual != unexpected)
 	{
 		if (JSON.stringify(actual) != JSON.stringify(unexpected))
@@ -165,12 +165,14 @@ exports.notEquals = function(actual, unexpected, message, callback)
 	message = parameters.message || 'Assertion for inequality error';
 	message = util.format('%s: expected %s different from %s', message, util.inspect(actual), util.inspect(unexpected));
 	callback = parameters.callback;
-	exports.failure(message, callback);
-};
-exports.assertNotEquals = exports.notEquals;
+	failure(message, callback);
+}
 
-exports.contains = function(container, piece, message, callback)
-{
+export function assertNotEquals(...args) {
+	return notEquals(...args);
+}
+
+export function contains(container, piece, message, callback) {
 	if (typeof container == 'string')
 	{
 		if (container.indexOf(piece) != -1)
@@ -191,21 +193,20 @@ exports.contains = function(container, piece, message, callback)
 	else
 	{
 		message = 'Invalid container ' + typeof container + ', should be string or array, cannot check ' + message;
-		return exports.failure(message, callback);
+		return failure(message, callback);
 	}
 	delete arguments[0];
 	delete arguments[1];
 	const parameters = processParameters(arguments);
 	message = parameters.message || 'Assertion for equality error';
 	message = util.format('%s: %s does not contain %s', message, util.inspect(container), util.inspect(piece));
-	exports.failure(message, parameters.callback);
-};
+	failure(message, parameters.callback);
+}
 
 /**
  * Check that the error is falsy, show a failure otherwise.
  */
-exports.check = function(error, message, callback)
-{
+export function check(error, message, callback) {
 	if (!error)
 	{
 		return;
@@ -220,21 +221,21 @@ exports.check = function(error, message, callback)
 	message = parameters.message + ': ' + description;
 	callback = parameters.callback;
 	// show failure with the given arguments
-	exports.failure(message, callback);
-};
+	failure(message, callback);
+}
 
 /**
  * Test assert functions.
  */
 function testAssert(callback)
 {
-	exports.verify(1 + 1 == 2, 'Basic assert', callback);
-	exports.equals(1 + 1, 2, 'Basic assert equals', callback);
-	exports.equals({a: 'a'}, {a: 'a'}, 'Object assert equals', callback);
-	exports.notEquals(1 + 1, 3, 'Basic assert not equals', callback);
-	exports.notEquals({a: 'a'}, {a: 'b'}, 'Object assert not equals', callback);
-	exports.check(false, 'Check should not trigger', callback);
-	exports.success(callback);
+	verify(1 + 1 == 2, 'Basic assert', callback);
+	equals(1 + 1, 2, 'Basic assert equals', callback);
+	equals({a: 'a'}, {a: 'a'}, 'Object assert equals', callback);
+	notEquals(1 + 1, 3, 'Basic assert not equals', callback);
+	notEquals({a: 'a'}, {a: 'b'}, 'Object assert not equals', callback);
+	check(false, 'Check should not trigger', callback);
+	success(callback);
 }
 
 /**
@@ -244,8 +245,7 @@ function testAssert(callback)
  *	- timeout: an optional timeout to consider tests as failed.
  *	- callback: an optional function to call after tests have finished.
  */
-exports.run = function(tests, timeout, callback)
-{
+export function run(tests, timeout, callback) {
 	if (typeof timeout == 'function')
 	{
 		callback = timeout;
@@ -280,7 +280,7 @@ exports.run = function(tests, timeout, callback)
 		}
 	}, timeout);
 	// run the tests
-	runner.run(tests, function(error, result)
+	runAll(tests, function(error, result)
 	{
 		clearTimeout(running);
 		if (callback)
@@ -288,26 +288,24 @@ exports.run = function(tests, timeout, callback)
 			return callback(error, result);
 		}
 	});
-};
+}
 
 /**
  * Show the result of some tests. Parameters:
  *	- error: when tests have failed, an error message.
  *	- result: when tests have succeeded, the whole results.
  */
-exports.show = function(error, result)
-{
+export function show(error, result) {
 	showResults(error, result);
-};
+}
 
 /**
  * Show the complete hierarchical error results.
  */
-exports.showComplete = function(error, result)
-{
+export function showComplete(error, result) {
 	console.log('Complete test results: %s', result);
 	showResults(error, result);
-};
+}
 
 /**
  * Show test results.
@@ -346,7 +344,7 @@ function testObject(callback)
 			key: 'value',
 		},
 	};
-	exports.success(object, callback);
+	success(object, callback);
 }
 
 /**
@@ -354,15 +352,14 @@ function testObject(callback)
  */
 function testSingleFunction(callback)
 {
-	exports.success(true, callback);
+	success(true, callback);
 }
 
 /**
  * Pass a tester callback whose results you want shown.
  * Returns a function that runs the tests, shows the results and invokes the callback.
  */
-exports.toShow = function(tester)
-{
+export function toShow(tester) {
 	return function(callback)
 	{
 		tester(function(error, result)
@@ -371,7 +368,7 @@ exports.toShow = function(tester)
 			callback(error, result);
 		});
 	};
-};
+}
 
 async function testPromise()
 {
@@ -390,8 +387,7 @@ function sleep(ms) {
 /**
  * Run all module tests.
  */
-exports.test = function(callback)
-{
+export function test(callback) {
 	const tests = [
 		testSuccessFailure,
 		testAssert,
@@ -402,13 +398,13 @@ exports.test = function(callback)
 		},
 		testPromise,
 	];
-	exports.run(testSingleFunction, function(error, result)
+	run(testSingleFunction, function(error, result)
 	{
-		exports.check(error, 'Could not run single function', callback);
-		exports.assert(result, 'Invalid test result', callback);
-		exports.run(tests, callback);
+		check(error, 'Could not run single function', callback);
+		assert(result, 'Invalid test result', callback);
+		run(tests, callback);
 	});
-};
+}
 
 function error(message) {
 	console.error(RED + message + BLACK);
@@ -416,11 +412,5 @@ function error(message) {
 
 function notice(message) {
 	console.log(GREEN + message + BLACK);
-}
-
-// run tests if invoked directly
-if (__filename == process.argv[1])
-{
-	exports.test(exports.show);
 }
 
