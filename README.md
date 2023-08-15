@@ -14,8 +14,10 @@ Or add package testing to your package.json dependencies.
 
 ### Compatibility
 
-Versions 2 and later should be used at least with Node.js v8 or later:
+Version 3 is an ES6 module, and should be used at least with Node.js v16 or later.
+Versions 2 should be used at least with Node.js v8 or later.
 
+* Node.js v16 or later, ES module: ^3.0.0.
 * Node.js v8 or later: ^2.0.0.
 * Node.js v6 or earlier: ^1.1.0.
 
