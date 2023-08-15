@@ -62,6 +62,10 @@ export function fail(...args) {
 	return failure(...args)
 }
 
+export function removeError() {
+	errors -= 1
+}
+
 /**
  * Find a callback in any parameter, extract the message. Parameters:
  * - args: an array like, will be sanitized before util.format() is used to get the message.
@@ -91,18 +95,6 @@ function processParameters(args)
 }
 
 /**
- * Test success and failure.
- */
-function testSuccessFailure(callback)
-{
-	success('success');
-	failure('test; please ignore');
-	// remove this error
-	errors -= 1;
-	success('Success and failure work', callback);
-}
-
-/**
  * Assert a condition, and show a failure otherwise.
  */
 export function verify(condition, message, callback) {
@@ -117,8 +109,9 @@ export function verify(condition, message, callback) {
 	// show failure with the given arguments
 	failure(message, callback);
 }
-export function assert(condition, message, callback) {
-	return verify(condition, message, callback)
+
+export function assert(...args) {
+	return verify(...args)
 }
 
 /**
@@ -225,20 +218,6 @@ export function check(error, message, callback) {
 }
 
 /**
- * Test assert functions.
- */
-function testAssert(callback)
-{
-	verify(1 + 1 == 2, 'Basic assert', callback);
-	equals(1 + 1, 2, 'Basic assert equals', callback);
-	equals({a: 'a'}, {a: 'a'}, 'Object assert equals', callback);
-	notEquals(1 + 1, 3, 'Basic assert not equals', callback);
-	notEquals({a: 'a'}, {a: 'b'}, 'Object assert not equals', callback);
-	check(false, 'Check should not trigger', callback);
-	success(callback);
-}
-
-/**
  * Run a set of tests. Parameters:
  *	- tests: an object with an attribute for every test function,
 *	an array or a single function.
@@ -314,7 +293,7 @@ function showResults(error, result)
 {
 	if (error)
 	{
-		exports.failure(error);
+		failure(error);
 		process.exit(1);
 		return;
 	}
@@ -335,27 +314,6 @@ function showResults(error, result)
 }
 
 /**
- * A test which returns a complex object, to check how results are displayed.
- */
-function testObject(callback)
-{
-	const object = {
-		embedded: {
-			key: 'value',
-		},
-	};
-	success(object, callback);
-}
-
-/**
- * Function to test separately.
- */
-function testSingleFunction(callback)
-{
-	success(true, callback);
-}
-
-/**
  * Pass a tester callback whose results you want shown.
  * Returns a function that runs the tests, shows the results and invokes the callback.
  */
@@ -370,42 +328,6 @@ export function toShow(tester) {
 	};
 }
 
-async function testPromise()
-{
-	await sleep(100)
-	return 'promise'
-}
-
-function sleep(ms) {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			resolve()
-		}, ms)
-	})
-}
-
-/**
- * Run all module tests.
- */
-export function test(callback) {
-	const tests = [
-		testSuccessFailure,
-		testAssert,
-		{
-			recursive: {
-				object: testObject,
-			},
-		},
-		testPromise,
-	];
-	run(testSingleFunction, function(error, result)
-	{
-		check(error, 'Could not run single function', callback);
-		assert(result, 'Invalid test result', callback);
-		run(tests, callback);
-	});
-}
-
 function error(message) {
 	console.error(RED + message + BLACK);
 }
@@ -413,4 +335,12 @@ function error(message) {
 function notice(message) {
 	console.log(GREEN + message + BLACK);
 }
+
+const testing = {
+	success, failure, fail, removeError, verify, assert,
+	equals, assertEquals, notEquals, assertNotEquals,
+	contains, check, run, show, showComplete, toShow,
+}
+
+export default testing
 
