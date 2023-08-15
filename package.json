@@ -25,5 +25,8 @@
 	"scripts": {
 		"test": "node index.js"
 	},
-	"private": false
+	"private": false,
+	"devDependencies": {
+		"eslint": "^8.47.0"
+	}
 }
