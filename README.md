@@ -66,53 +66,44 @@ Or, with callbacks:
 
 ### Running all tests
 
-Run all tests:
-```js
-    testing.run([
-        testAdd,
-        testAsync,
-    ], callback);
-```
-Will run tests sequentially. Usually test are run inside an exported function `test`:
-```js
-    /**
-     * Run package tests.
-     */
-    exports.test = function(callback)
-    {   
-        var tests = [
-            testAdd,
-            testAsync,
-        ];
-        testing.run(tests, callback);
-    };  
-        
-    // run tests if invoked directly
-    if (__filename == process.argv[1])
-    {   
-        exports.test(testing.show);
-    }
-```
-All tests are run every time the file is invoked directly:
-```js
-    node my-file.js
-```
-The function `test` is exported so that tests from all source code files
-can be required and run in sequence from a master file,
-usually called `test.js` and placed in the root of the project.
+Pass an array to `testing.run()` to run all tests sequentially:
 
-### Running all tests in a project
-
-If you want to run all tests in a project, you can pass a filename as a test:
 ```js
-    var tests = [
-        __dirname__ + '/lib/first.js',
-        __dirname__ + '/lib/second.js',
-    ];
-    testing.run(tests, callback);
+testing.run([
+	testAdd,
+	testAsync,
+], callback);
 ```
-Each file should have its own exported test function.
-This is a common practice in a global test file `test.js`.
+
+Usually tests are stored in a separate file.
+Each test file will export its tests as a function,
+e.g. `testAdd()`.
+An aggregate file will run all package tests directly:
+
+```js
+import testing from 'testing'
+import testAdd from './testAdd.js'
+import testAsync from './testAsync.js'
+
+/**
+ * Run package tests.
+ */
+function test(callback) {
+	var tests = [
+		testAdd,
+		testAsync,
+	];
+	testing.run(tests, callback);
+};
+	
+test(testing.show);
+```
+
+Tests are run every time this aggregate file is invoked directly:
+
+```js
+ $ node test/all.js
+```
 
 ## API
 
