@@ -232,7 +232,7 @@ export function run(tests, timeout, callback) {
 	}
 	if (!callback)
 	{
-		console.log('No callback given to testing.run()');
+		callback = show
 	}
 	if (typeof tests == 'function')
 	{
