@@ -23,10 +23,10 @@ Versions 2 should be used at least with Node.js v8 or later.
 
 ## Usage
 
-Add asynchronous testing to your code very easily. Require testing:
+Add asynchronous testing to your code very easily. Import the library:
 
 ```js
-var testing = require('testing');
+import testing from 'testing';
 ```
 
 ### Unit tests
