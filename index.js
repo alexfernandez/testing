@@ -265,7 +265,7 @@ exports.run = function(tests, timeout, callback)
 	var nTests = 0;
 	for (var key in tests)
 	{
-		if (tests.hasOwnProperty(key))
+		if (Object.hasOwn(tests, key))
 		{
 			nTests += 1;
 		}
