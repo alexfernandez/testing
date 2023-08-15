@@ -7,17 +7,16 @@
 
 
 // requires
-var Log = require('log');
 var runner = require('./lib/runner.js');
 var util = require('util');
 
 // globals
-var log = new Log('info');
 var errors = 0;
 
 // constants
-var IN_GREEN = '\u001b[32m%s\u001b[0m';
-var IN_RED = '\u001b[1;31m%s\u001b[0m';
+var GREEN = '\u001b[32m';
+var RED = '\u001b[1;31m';
+var BLACK = '\u001b[0m';
 
 
 /**
@@ -39,11 +38,11 @@ exports.success = function(message, callback)
 	if (errors)
 	{
 		// previous errors detected
-		log.notice(IN_RED, 'With errors: ' + message);
+		error('With errors: ' + message);
 	}
 	else
 	{
-		log.notice(IN_GREEN, message);
+		notice(message);
 	}
 };
 
@@ -64,7 +63,7 @@ exports.failure = function(message, callback)
 	{
 		return callback(message);
 	}
-	log.error(IN_RED, message);
+	error(message);
 };
 exports.fail = exports.failure;
 
@@ -257,7 +256,7 @@ exports.run = function(tests, timeout, callback)
 	}
 	if (!callback)
 	{
-		log.warning('No callback given to testing.run()');
+		console.log('No callback given to testing.run()');
 	}
 	if (typeof tests == 'function')
 	{
@@ -277,7 +276,7 @@ exports.run = function(tests, timeout, callback)
 	var running = setTimeout(function()
 	{
 		var message = 'Package tests did not call back';
-		log.error(IN_RED, message);
+		error(message);
 		if (callback)
 		{
 			return callback(message);
@@ -309,7 +308,7 @@ exports.show = function(error, result)
  */
 exports.showComplete = function(error, result)
 {
-	log.notice('Complete test results: %s', result);
+	console.log('Complete test results: %s', result);
 	showResults(error, result);
 };
 
@@ -333,7 +332,7 @@ function showResults(error, result)
 	{
 		printable = result.getSummary();
 	}
-	log.notice('All tests run with %s', printable);
+	console.log('All tests run with %s', printable);
 	if (result.failure)
 	{
 		process.exit(1);
@@ -413,6 +412,14 @@ exports.test = function(callback)
 		exports.run(tests, callback);
 	});
 };
+
+function error(message) {
+	console.error(RED + message + BLACK);
+}
+
+function notice(message) {
+	console.log(GREEN + message + BLACK);
+}
 
 // run tests if invoked directly
 if (__filename == process.argv[1])
