@@ -20,7 +20,7 @@
 		"asynchronous"
 	],
 	"engines": {
-		"node": ">10"
+		"node": ">16"
 	},
 	"scripts": {
 		"test": "node index.js"
