@@ -7,16 +7,13 @@
 
 
 // requires
-var runner = require('./lib/runner.js');
-var util = require('util');
+const runner = require('./lib/runner.js');
+const util = require('util');
 
-// globals
-var errors = 0;
-
-// constants
-var GREEN = '\u001b[32m';
-var RED = '\u001b[1;31m';
-var BLACK = '\u001b[0m';
+const GREEN = '\u001b[32m';
+const RED = '\u001b[1;31m';
+const BLACK = '\u001b[0m';
+let errors = 0;
 
 
 /**
@@ -28,7 +25,7 @@ var BLACK = '\u001b[0m';
  */
 exports.success = function(message, callback)
 {
-	var parameters = processParameters(arguments);
+	const parameters = processParameters(arguments);
 	message = parameters.message || true;
 	callback = parameters.callback;
 	if (callback)
@@ -56,7 +53,7 @@ exports.success = function(message, callback)
 exports.failure = function(message, callback)
 {
 	errors += 1;
-	var parameters = processParameters(arguments);
+	const parameters = processParameters(arguments);
 	message = parameters.message || 'Failure';
 	callback = parameters.callback;
 	if (callback)
@@ -73,15 +70,15 @@ exports.fail = exports.failure;
  */
 function processParameters(args)
 {
-	var parameters = {};
+	const parameters = {};
 	if (!arguments[0])
 	{
 		return parameters;
 	}
-	var reargs = [];
-	for (var i in args)
+	const reargs = [];
+	for (const i in args)
 	{
-		var arg = args[i];
+		const arg = args[i];
 		if (typeof arg == 'function')
 		{
 			parameters.callback = arg;
@@ -117,7 +114,7 @@ exports.verify = function(condition, message, callback)
 		return;
 	}
 	delete arguments[0];
-	var parameters = processParameters(arguments);
+	const parameters = processParameters(arguments);
 	message = parameters.message || 'Assertion error';
 	callback = parameters.callback;
 	// show failure with the given arguments
@@ -141,7 +138,7 @@ exports.equals = function(actual, expected, message, callback)
 	}
 	delete arguments[0];
 	delete arguments[1];
-	var parameters = processParameters(arguments);
+	const parameters = processParameters(arguments);
 	message = parameters.message || 'Assertion for equality error';
 	message = util.format('%s: expected %s but got %s', message, util.inspect(expected), util.inspect(actual));
 	callback = parameters.callback;
@@ -164,7 +161,7 @@ exports.notEquals = function(actual, unexpected, message, callback)
 	}
 	delete arguments[0];
 	delete arguments[1];
-	var parameters = processParameters(arguments);
+	const parameters = processParameters(arguments);
 	message = parameters.message || 'Assertion for inequality error';
 	message = util.format('%s: expected %s different from %s', message, util.inspect(actual), util.inspect(unexpected));
 	callback = parameters.callback;
@@ -183,7 +180,7 @@ exports.contains = function(container, piece, message, callback)
 	}
 	else if (Array.isArray(container))
 	{
-		for (var i = 0; i < container.length; i++)
+		for (let i = 0; i < container.length; i++)
 		{
 			if (container[i] == piece)
 			{
@@ -198,7 +195,7 @@ exports.contains = function(container, piece, message, callback)
 	}
 	delete arguments[0];
 	delete arguments[1];
-	var parameters = processParameters(arguments);
+	const parameters = processParameters(arguments);
 	message = parameters.message || 'Assertion for equality error';
 	message = util.format('%s: %s does not contain %s', message, util.inspect(container), util.inspect(piece));
 	exports.failure(message, parameters.callback);
@@ -214,8 +211,8 @@ exports.check = function(error, message, callback)
 		return;
 	}
 	delete arguments[0];
-	var parameters = processParameters(arguments);
-	var description = util.inspect(error);
+	const parameters = processParameters(arguments);
+	let description = util.inspect(error);
 	if (error.stack)
 	{
 		description = error.stack;
@@ -262,8 +259,8 @@ exports.run = function(tests, timeout, callback)
 	{
 		tests = [tests];
 	}
-	var nTests = 0;
-	for (var key in tests)
+	let nTests = 0;
+	for (const key in tests)
 	{
 		if (Object.hasOwn(tests, key))
 		{
@@ -273,9 +270,9 @@ exports.run = function(tests, timeout, callback)
 	// if no timeout, give each test one second
 	timeout = timeout || 1000 * nTests;
 	// start the timer
-	var running = setTimeout(function()
+	const running = setTimeout(function()
 	{
-		var message = 'Package tests did not call back';
+		const message = 'Package tests did not call back';
 		error(message);
 		if (callback)
 		{
@@ -323,7 +320,7 @@ function showResults(error, result)
 		process.exit(1);
 		return;
 	}
-	var printable = 'No test result';
+	let printable = 'No test result';
 	if (typeof result == 'string')
 	{
 		printable = result;
@@ -344,7 +341,7 @@ function showResults(error, result)
  */
 function testObject(callback)
 {
-	var object = {
+	const object = {
 		embedded: {
 			key: 'value',
 		},
@@ -395,7 +392,7 @@ function sleep(ms) {
  */
 exports.test = function(callback)
 {
-	var tests = [
+	const tests = [
 		testSuccessFailure,
 		testAssert,
 		{
