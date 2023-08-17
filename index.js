@@ -306,7 +306,8 @@ function showResults(error, result)
 	{
 		printable = result.getSummary();
 	}
-	console.log('All tests run with %s', printable);
+	const elapsed = result.elapsedMs / 1000
+	console.log(`All tests run in ${elapsed.toFixed(1)} seconds with ${printable}`);
 	if (result.failure)
 	{
 		process.exit(1);
